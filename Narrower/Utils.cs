@@ -15,27 +15,28 @@ namespace Narrower
 
         public void ConvertFile()
         {
-            // Definición de la tabla ordenar los datos
+            // Datatable object definition to ordering data
             DataTable table = new DataTable();
 
-            // Definición del reader para leer el archivo
+            // Reader object definition to read data from file provided
             StreamReader reader = ReadFile(FilePath);
 
-            // Setear los headers de la tabla
+            // Setting the table headers from file
             table = SetHeaders(table, reader.ReadLine());
 
-            // Obtener los valores del archivo
+            // Getting the values from file provided
             table = GetData(table, reader);
 
+            // Closing reader object to free memory
             reader.Close();
 
-            // Crea el archivo y escribe la data
+            // Create a new .csv file and write the data in the new format
             WriteData(table);
         }
 
         /** 
          * 
-         * Crea la instancia del reader con el archivo especificado cargado en memoria.
+         * Create a reader instance with the provided file loaded into memory
          * 
          * **/
         private StreamReader ReadFile(string path)
@@ -45,11 +46,11 @@ namespace Narrower
 
         /** 
          * 
-         * Define los headers del datatable para realizar el ordenamiento en un objeto complejo
-         * Se usa un valor posicional para definir los primeros 5 campos fijos como flags según 
-         * el orden del archivo y un segundo valor posicional para obtener el nombre de cada 
-         * columna unica removiedo el ultimo char de cada uno que seria el numero identificador
-         * innnecesario para el caso.
+         * Define the headers of the datatable to perform the ordering on a complex object
+         * A positional value is used to define the first 5 fixed fields as flags according to
+         * the file order and a second positional value to get the name of each
+         * unique column removing the last char of each one that would be the identifier number
+         * unnecessary for the case.
          * 
          * **/
         private DataTable SetHeaders(DataTable table, string headers)
@@ -75,19 +76,19 @@ namespace Narrower
 
         /** 
          * 
-         * Obtiene los datos del archivo fuente y administra la forma en la que estos se insertan
-         * usando un valor posicional dinamico, para saber que posición se está leyendo en el momento 
-         * coinciendo así el número de saltos, partiendo de la posición antes de cada columna
-         * 
-         * Ej: Para obtener la posición de Name1 se usa la posición previa sumando el mutator
-         * 
-         *                  Posición previa:    4
-         *                  Mutator:            1
-         *                  Posición real:      5 (4+1)
-         *                  
-         *  Esto para realizar la carga dinámica calculando los saltos y la posición actual del reader. 
-         *  Valiando que si se topa con alguna primera posición de nombre vacía salte a la siguiente
-         *  ya que todo ese valor será vacío.
+         * Gets the data from the source file and manages how it is inserted
+         * using a dynamic place value, to know which position is currently being read
+         * Thus matching the number of jumps, starting from the position before each column
+         *
+         * Ex: To obtain the position of Name1 the previous position is used adding the mutator
+         *
+         * Previous position: 4
+         * Mutator: 1
+         * Actual position: 5 (4+1)
+         *
+         * This to perform dynamic loading by calculating the jumps and the current position of the reader.
+         * Assuming that if it comes across a first position with an empty name, it jumps to the next one
+         * since all that value will be empty.
          *  
          * **/
         private DataTable GetData(DataTable table, StreamReader reader)
@@ -122,11 +123,10 @@ namespace Narrower
 
         /**
          * 
-         * Escribe la información y los headers en un archivo csv en memoria.
-         * Realiza la conversión de Datatable a String con el char (,) como
-         * división entre colmna de cada row.
+         * Writes the data and headers to a new .csv file in memory.
+         * Convert the in-memory data table to a string using the (,) character as a separator for each column in the row
          * 
-         * El archivo creado se guarda en la carpeta /Resources en los compilados /bin
+         * The generated file is saved in the /Resources folder in the compiled /bin
          * 
          * **/
         private void WriteData(DataTable table)
@@ -154,7 +154,7 @@ namespace Narrower
 
         /** 
          * 
-         * Escribe los headers del Datatable en el archivo en la primera linea.
+         * Write the new headers from generated datatable in the first line of new file
          * 
          * **/
 
